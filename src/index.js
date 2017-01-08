@@ -78,8 +78,11 @@ const Marquee = React.createClass({
 
   render() {
     const style = {
+      //'position': 'static',
       'position': 'relative',
-      'right': this.state.animatedWidth,
+      'display': 'inline-block',
+      //'right': this.state.animatedWidth,
+      'transform': `translate3d(-${this.state.animatedWidth}px, 0px, 0px)`,
       'whiteSpace': 'nowrap'
     };
 
