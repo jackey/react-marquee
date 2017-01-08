@@ -33,7 +33,9 @@ const Marquee = React.createClass({
   },
 
   componentDidMount() {
+    this.animateMounted = true;
     this._measureText();
+    clearTimeout(this._marqueeTimer);
 
     if (this.props.hoverToStop) {
       this._startAnimation();
@@ -49,6 +51,7 @@ const Marquee = React.createClass({
   },
 
   componentWillUnmount() {
+    this.animateMounted = false;
     clearTimeout(this._marqueeTimer);
   },
 
@@ -104,6 +107,10 @@ const Marquee = React.createClass({
     const timeout = isLeading ? this.props.leading : TIMEOUT;
 
     const animate = () => {
+      if (!this.animateMounted) {
+        clearTimeout(this._marqueeTimer);
+        return ;
+      }
       const {overflowWidth} = this.state;
       let animatedWidth = this.state.animatedWidth + STEP;
       const isRoundOver = animatedWidth > overflowWidth;
@@ -156,4 +163,4 @@ const Marquee = React.createClass({
   }
 });
 
-module.exports = Marquee;
+export default Marquee;
